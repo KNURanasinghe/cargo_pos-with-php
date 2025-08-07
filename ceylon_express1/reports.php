@@ -1,4 +1,3 @@
-
 <?php
 // reports.php
 require_once 'config.php';
@@ -89,11 +88,100 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
             border: none;
             color: white;
         }
+        
+        /* Print-specific styles */
+        @media print {
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+        
+        body {
+            background-color: white;
+            font-size: 10px !important;
+            width: 100%;
+        }
+        
+        .no-print, .navbar, .card-header, .btn, .form-control, .stats-card {
+            display: none !important;
+        }
+        
+        .container {
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        
+        table {
+            width: 100% !important;
+            font-size: 8px !important;
+            table-layout: fixed;
+        }
+        
+        th, td {
+            padding: 2px !important;
+            word-wrap: break-word;
+        }
+        
+        .card {
+            box-shadow: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .card-body {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        
+        .table-responsive {
+            overflow: visible !important;
+            width: 100% !important;
+        }
+        
+        /* Specific column adjustments */
+        th:nth-child(1), td:nth-child(1) { width: 6% !important; } /* Date */
+        th:nth-child(2), td:nth-child(2) { width: 8% !important; } /* Tracking */
+        th:nth-child(3), td:nth-child(3) { width: 10% !important; } /* Sender */
+        th:nth-child(4), td:nth-child(4) { width: 8% !important; } /* Mobile */
+        th:nth-child(5), td:nth-child(5) { width: 10% !important; } /* Receiver */
+        th:nth-child(6), td:nth-child(6) { width: 15% !important; } /* Address */
+        th:nth-child(7), td:nth-child(7) { width: 5% !important; } /* Boxes */
+        th:nth-child(8), td:nth-child(8) { width: 6% !important; } /* Weight */
+        th:nth-child(9), td:nth-child(9) { width: 6% !important; } /* Charge Weight */
+        th:nth-child(10), td:nth-child(10) { width: 6% !important; } /* Rate */
+        th:nth-child(11), td:nth-child(11) { width: 6% !important; } /* Freight */
+        th:nth-child(12), td:nth-child(12) { width: 6% !important; } /* Tax */
+        th:nth-child(13), td:nth-child(13) { width: 8% !important; } /* Total */
+        th:nth-child(14), td:nth-child(14) { display: none !important; } /* Actions */
+        
+        .print-header {
+            display: block !important;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .print-footer {
+            display: block !important;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 8px;
+        }
+        
+        .print-date-range {
+            display: block !important;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 10px;
+        }
+    }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark no-print">
         <div class="container">
             <a class="navbar-brand" href="dashboard.php">
                 <i class="fas fa-shipping-fast"></i> Ceylon Express
@@ -110,8 +198,25 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
     </nav>
 
     <div class="container mt-4">
+        <!-- Print Header -->
+        <div class="print-header">
+            <h2>Ceylon Express</h2>
+            <h3>Shipment Report</h3>
+            <?php if ($from_date || $to_date): ?>
+                <div class="print-date-range">
+                    <?php if ($from_date && $to_date): ?>
+                        Date Range: <?php echo date('d/m/Y', strtotime($from_date)); ?> to <?php echo date('d/m/Y', strtotime($to_date)); ?>
+                    <?php elseif ($from_date): ?>
+                        From: <?php echo date('d/m/Y', strtotime($from_date)); ?>
+                    <?php elseif ($to_date): ?>
+                        To: <?php echo date('d/m/Y', strtotime($to_date)); ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
         <!-- Filters -->
-        <div class="card">
+        <div class="card no-print">
             <div class="card-header bg-primary text-white">
                 <h4><i class="fas fa-filter"></i> Report Filters</h4>
             </div>
@@ -135,12 +240,15 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-search"></i> Filter
                             </button>
+                            <button type="button" onclick="clearFilters()" class="btn btn-secondary" style="margin-top: 5px;">
+            <i class="fas fa-times"></i> Clear
+        </button>
                         </div>
                     </div>
                 </form>
                 
                 <div class="mt-3">
-                    <button onclick="window.print()" class="btn btn-info">
+                    <button onclick="printReport()" class="btn btn-info">
                         <i class="fas fa-print"></i> Print Report
                     </button>
                 </div>
@@ -148,7 +256,7 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
         </div>
 
         <!-- Summary Stats -->
-        <div class="row">
+        <div class="row no-print">
             <div class="col-md-3">
                 <div class="stats-card text-center">
                     <h3><?php echo $total_shipments; ?></h3>
@@ -169,7 +277,7 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
             </div>
             <div class="col-md-3">
                 <div class="stats-card text-center">
-                    <h3>Rs. <?php echo number_format($total_payable, 2); ?></h3>
+                    <h3>€ <?php echo number_format($total_payable, 2); ?></h3>
                     <p class="mb-0">Total Revenue</p>
                 </div>
             </div>
@@ -177,7 +285,7 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
 
         <!-- Detailed Report -->
         <div class="card">
-            <div class="card-header bg-info text-white">
+            <div class="card-header bg-info text-white no-print">
                 <h5><i class="fas fa-table"></i> Detailed Shipment Report</h5>
             </div>
             <div class="card-body">
@@ -203,7 +311,7 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
                                     <th>Freight</th>
                                     <th>Tax</th>
                                     <th>Total</th>
-                                    <th>Actions</th>
+                                    <th class="no-print">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -223,10 +331,10 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
                                         <td><?php echo number_format($shipment['actual_weight'], 2); ?></td>
                                         <td><?php echo number_format($shipment['chargeable_weight'], 2); ?></td>
                                         <td><?php echo number_format($shipment['rate_per_kg'], 2); ?></td>
-                                        <td>Rs. <?php echo number_format($shipment['freight_amount'], 2); ?></td>
-                                        <td>Rs. <?php echo number_format($shipment['tax_amount'], 2); ?></td>
-                                        <td><strong>Rs. <?php echo number_format($shipment['total_payable'], 2); ?></strong></td>
-                                        <td>
+                                        <td>€ <?php echo number_format($shipment['freight_amount'], 2); ?></td>
+                                        <td>€ <?php echo number_format($shipment['tax_amount'], 2); ?></td>
+                                        <td><strong>€ <?php echo number_format($shipment['total_payable'], 2); ?></strong></td>
+                                        <td class="no-print">
                                             <a href="print_shipment.php?id=<?php echo $shipment['id']; ?>" target="_blank" class="btn btn-sm btn-primary">
                                                 <i class="fas fa-print"></i>
                                             </a>
@@ -241,16 +349,21 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
                                     <th><?php echo number_format($total_weight, 2); ?></th>
                                     <th><?php echo number_format($total_chargeable_weight, 2); ?></th>
                                     <th>-</th>
-                                    <th>Rs. <?php echo number_format($total_freight, 2); ?></th>
-                                    <th>Rs. <?php echo number_format($total_tax, 2); ?></th>
-                                    <th><strong>Rs. <?php echo number_format($total_payable, 2); ?></strong></th>
-                                    <th>-</th>
+                                    <th>€ <?php echo number_format($total_freight, 2); ?></th>
+                                    <th>€ <?php echo number_format($total_tax, 2); ?></th>
+                                    <th><strong>€ <?php echo number_format($total_payable, 2); ?></strong></th>
+                                    <th class="no-print">-</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 <?php endif; ?>
             </div>
+        </div>
+        
+        <!-- Print Footer -->
+        <div class="print-footer">
+            Printed on: <?php echo date('d/m/Y H:i'); ?> | Ceylon Express
         </div>
     </div>
 
@@ -265,6 +378,30 @@ $total_boxes = array_sum(array_column($shipments, 'no_of_boxes'));
         flatpickr("#to_date", {
             dateFormat: "Y-m-d"
         });
+        
+        // Custom print function
+        function printReport() {
+            // Open print dialog
+            window.print();
+        }
+        
+        // Add event listener for before print
+        window.addEventListener('beforeprint', function() {
+            // You can add any pre-print logic here if needed
+        });
+
+        function clearFilters() {
+    // Clear the date inputs
+    document.getElementById('from_date').value = '';
+    document.getElementById('to_date').value = '';
+    
+    // Clear the mobile filter
+    document.querySelector('input[name="mobile_filter"]').value = '';
+    
+    // Submit the form to reload without filters
+    document.forms[0].submit();
+}
+
     </script>
 </body>
 </html>
