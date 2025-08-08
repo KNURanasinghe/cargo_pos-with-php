@@ -47,12 +47,12 @@ $company = $company_stmt->fetch();
     <style>
         @page {
             size: A4;
-            margin: 0.5in;
+            margin: 0.5cm;
         }
 
         body {
             font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             line-height: 1.2;
             color: #000;
             margin: 0;
@@ -61,20 +61,23 @@ $company = $company_stmt->fetch();
 
         .container {
             width: 100%;
-            max-width: 8.5in;
+            max-width: 19cm;
             margin: 0 auto;
-            padding: 10px;
-            border: 2px solid #000;
-            min-height: 10.5in;
+            padding: 10px 15px;
+            border: 1px solid #000;
+            min-height: 27.7cm;
+            box-sizing: border-box;
+            position: relative;
+            
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border-bottom: 1px solid #000;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
         .company-info {
@@ -82,131 +85,174 @@ $company = $company_stmt->fetch();
         }
 
         .company-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 14px;
+            margin: 0 0 3px 0;
+            font-size: 12px;
             font-weight: bold;
         }
 
         .company-info p {
-            margin: 2px 0;
-            font-size: 10px;
+            margin: 1px 0;
+            font-size: 9px;
         }
 
         .logo-section {
-            flex: 1;
+            flex: 0 0 100px;
             text-align: right;
         }
 
         .logo-section h2 {
             margin: 0;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: bold;
         }
 
         .tracking-section {
-            margin: 15px 0;
+            margin: 10px 0;
             display: flex;
             justify-content: space-between;
+            font-size: 10px;
         }
 
         .tracking-no {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             border: 1px solid #000;
-            padding: 5px;
+            padding: 3px;
             background: #f0f0f0;
+            margin: 5px 0;
         }
 
         .mobile-field {
             border: 1px solid #000;
-            padding: 5px;
-            width: 150px;
+            padding: 3px;
+            width: 120px;
             text-align: right;
         }
 
         .section {
-            margin: 15px 0;
+            margin: 8px 0;
         }
 
         .section-title {
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             border-bottom: 1px solid #ccc;
             padding-bottom: 2px;
+            font-size: 10px;
         }
 
         .form-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
+            margin: 5px 0;
+            table-layout: fixed;
         }
 
         .form-table td,
         .form-table th {
             border: 1px solid #000;
-            padding: 4px;
+            padding: 3px;
             vertical-align: top;
+            font-size: 9px;
+            word-wrap: break-word;
         }
 
         .form-table th {
             background-color: #f5f5f5;
             font-weight: bold;
-            font-size: 10px;
         }
 
         .form-table .label {
             background-color: #f5f5f5;
             font-weight: bold;
-            font-size: 10px;
-            width: 25%;
+            width: 15%;
         }
 
         .form-table .value {
-            width: 75%;
+            width: 35%;
         }
 
         .sinhala-text {
             text-align: center;
-            margin: 20px 0;
-            padding: 10px;
+            margin: 10px 0;
+            padding: 5px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
-            font-size: 11px;
-            line-height: 1.4;
+            font-size: 9px;
+            line-height: 1.3;
+            font-family: 'Noto Sans Sinhala', Arial, sans-serif;
         }
 
         .signature-section {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 20px;
+            padding-top: 6px;
+            position: absolute;
+            bottom: 30px;
+            width: calc(100% - 70px);
+        }
+
+        .branch-section {
+            position: absolute;
+            bottom: 10px;
+            width: calc(100% - 30px);
+            text-align: center;
         }
 
         .signature-box {
             text-align: center;
             width: 30%;
             border-top: 1px solid #000;
-            padding-top: 5px;
+            padding-top: 3px;
+            font-size: 9px;
+        }
+
+        .signature-box-date {
+            text-align: center;
+            width: 30%;
+            /* border-top: 1px solid #000; */
+            padding-bottom: 3px;
+            font-size: 9px;
         }
 
         .remarks-section {
-            margin: 15px 0;
-            min-height: 40px;
+            margin: 8px 0;
+            min-height: 30px;
             border: 1px solid #000;
-            padding: 5px;
+            padding: 3px;
+            font-size: 9px;
         }
-        .sinhala-text {
-    text-align: center;
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    font-size: 11px;
-    line-height: 1.4;
-    font-family: 'Noto Sans Sinhala', Arial, sans-serif;
-    direction: ltr; /* Left-to-right for proper rendering */
-}
+
+        .pricing-table {
+            width: 50%;
+            margin-left: auto;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+
+        .pricing-table td {
+            border: 1px solid #000;
+            padding: 3px;
+            font-size: 9px;
+        }
+
+        .pricing-table .label {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            width: 60%;
+        }
+
+        .pricing-table .value {
+            width: 40%;
+            text-align: right;
+        }
+
+        .total-row {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
 
         @media print {
             body {
@@ -217,6 +263,10 @@ $company = $company_stmt->fetch();
             .no-print {
                 display: none !important;
             }
+
+            .container {
+                border: none;
+            }
         }
 
         .print-button {
@@ -226,10 +276,10 @@ $company = $company_stmt->fetch();
             background: #007bff;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 8px 15px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             z-index: 1000;
         }
     </style>
@@ -241,155 +291,158 @@ $company = $company_stmt->fetch();
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="company-info">
+            <div class="company-info "style="margin-top: 10px;">
                 <h3><?php echo $company['company_name'] ?? 'Ceylon Express'; ?></h3>
                 <p>Via Principe Eugenio, 83</p>
                 <p>00185 Roma,</p>
                 <p>Piazza Vittorio.</p>
-                <p>Italy - <?php echo $company['phone'] ?? 'Ceylon Express'; ?></p>
-                <p>Sri Lanka - +94 76 126 7433 / +94 76 074 5058</p>
+                <p>Italy - <?php echo $company['phone'] ?? ''; ?></p>
+                <!-- <p>Sri Lanka - +94 76 126 7433 / +94 76 074 5058</p> -->
                 <p>E-Mail : CEYLONEXPRESS83@gmail.com</p>
             </div>
 
-            <<div class="logo-section">
+            <div class="logo-section">
                 <?php if (file_exists('assets/images/logo.jpg')): ?>
-                    <h2 style="font-size: 14px; margin-top: 5px;">Ceylon Express</h2>
-                    <img src="assets/images/logo.jpg" alt="Ceylon Express Logo" style="max-width: 100px; max-height: 100px; margin-top: 5px;">
-
+                    <h2 style="font-size: 12px; margin-top: 6px;">Ceylon Express</h2>
+                    <img src="assets/images/logo.jpg" alt="Ceylon Express Logo" style="max-width: 80px; max-height: 80px; margin-top: 3px;">
                 <?php else: ?>
-                    <h2>Ceylon Express</h2>
-                    <p style="font-size: 10px; color: #666; margin: 5px 0;">Logo not found</p>
+                    <h2 style="font-size: 12px;">Ceylon Express</h2>
                 <?php endif; ?>
+            </div>
         </div>
-    </div>
 
-    <!-- Shipping Details -->
-    <div class="tracking-section">
-        <div>
-            <strong>Sender's Details</strong><br>
-            <strong>Shipping Date:</strong> <?php echo date('Y-m-d', strtotime($shipment['shipping_date'])); ?>
+        <!-- Shipping Details -->
+        <div class="tracking-section">
+            <div>
+                <strong>Sender's Details</strong><br>
+                <strong>Shipping Date:</strong> <?php echo date('Y-m-d', strtotime($shipment['shipping_date'])); ?>
+            </div>
+            <div>
+                <strong>MOBILE NO:</strong>
+                <span class="mobile-field"><?php echo $shipment['sender_mobile']; ?></span>
+            </div>
         </div>
-        <div>
-            <strong>MOBILE NO:</strong>
-            <span class="mobile-field"><?php echo $shipment['sender_mobile']; ?></span>
+
+        <div class="tracking-no">
+            <strong>TRACKING NO: <?php echo strtoupper($shipment['tracking_no']); ?></strong>
         </div>
-    </div>
 
-    <div class="tracking-no">
-        <strong>TRACKING NO: <?php echo strtoupper($shipment['tracking_no']); ?></strong>
-    </div>
+        <!-- Sender Details -->
+        <div class="section">
+            <div class="section-title">DETTAGLI DEI MITTENTI (SENDERS DETAILS)</div>
+            <table class="form-table">
+                <tr>
+                    <td class="label">NOME (NAME)</td>
+                    <td class="value"><?php echo $shipment['sender_name']; ?></td>
+                    <td class="label">COGNOME (SURNAME)</td>
+                    <td class="value"><?php echo $shipment['sender_surname']; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">INDIRIZZO (ADDRESS)</td>
+                    <td class="value" colspan="3"><?php echo $shipment['sender_address']; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">CODICE FISCALE (TAX CODE)</td>
+                    <td class="value"><?php echo $shipment['sender_tax_code'] ?: ''; ?></td>
+                    <td class="label">DATA DI NASCITA (DATE OF BIRTH)</td>
+                    <td class="value"><?php echo $shipment['sender_dob'] ? date('d/m/Y', strtotime($shipment['sender_dob'])) : ''; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">SESSO (SEX)</td>
+                    <td class="value"><?php echo $shipment['sender_sex'] ?: ''; ?></td>
+                    <td class="label">COMUNE DI NASCITA (BIRTH PLACE)</td>
+                    <td class="value"></td>
+                </tr>
+            </table>
+        </div>
 
-    <!-- Sender Details -->
-    <div class="section">
-        <div class="section-title">DETTAGLI DEI MITTENTI (SENDERS DETAILS)</div>
-        <table class="form-table">
+        <!-- Receiver Details -->
+        <div class="section">
+            <div class="section-title">RECEIVER DETAILS</div>
+            <table class="form-table">
+                <tr>
+                    <td class="label">NAME</td>
+                    <td class="value"><?php echo $shipment['receiver_name']; ?></td>
+                    <td class="label">RECEIVER ID</td>
+                    <td class="value"><?php echo $shipment['receiver_id']; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">ADDRESS</td>
+                    <td class="value" colspan="3"><?php echo $shipment['receiver_address']; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">PHONE NO.</td>
+                    <td class="value" colspan="3"><?php echo $shipment['phone1'] . ($shipment['phone2'] ? ', ' . $shipment['phone2'] : ''); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Sinhala Text -->
+        <div class="sinhala-text">
+            <?php echo htmlspecialchars_decode($company['sinhala_text'] ?? ''); ?>
+        </div>
+
+        <div class="section-title">REMARKS:</div>
+        <div class="remarks-section">
+            <?php echo nl2br(htmlspecialchars($shipment['remarks'])); ?>
+        </div>
+
+        <!-- Items and Weight -->
+        <table class="form-table" style="margin-top: 10px;">
             <tr>
-                <td class="label">NOME (NAME)</td>
-                <td class="value"><?php echo $shipment['sender_name']; ?></td>
-                <td class="label">COGNOME (SURNAME)</td>
-                <td class="value"><?php echo $shipment['sender_surname']; ?></td>
-                <td class="label">INDIRIZZO (ADDRESS)</td>
-                <td class="value"><?php echo $shipment['sender_address']; ?></td>
+                <th>ITEMS DESCRIPTION</th>
+                <th>NO. OF BOXES</th>
+                <th>ACTUAL WEIGHT</th>
+                <th>CHARGEABLE WEIGHT</th>
             </tr>
             <tr>
-                <td class="label">CODICE FISCALE (TAX CODE)</td>
-                <td class="value"><?php echo $shipment['sender_tax_code'] ?: ''; ?></td>
-                <td class="label">DATA DI NASCITA (DATE OF BIRTH)</td>
-                <td class="value"><?php echo $shipment['sender_dob'] ? date('d/m/Y', strtotime($shipment['sender_dob'])) : ''; ?></td>
-                <td class="label">COMUNE DI NASCITA (BIRTH PLACE)</td>
-                <td class="value"></td>
-            </tr>
-            <tr>
-                <td class="label">SESSO (SEX)</td>
-                <td class="value"><?php echo $shipment['sender_sex'] ?: ''; ?></td>
-                <td colspan="4"></td>
+                <td><?php echo htmlspecialchars($shipment['items_description'] ?? ''); ?></td>
+                <td><?php echo $shipment['no_of_boxes']; ?></td>
+                <td><?php echo number_format($shipment['actual_weight'], 2); ?> kg</td>
+                <td><?php echo number_format($shipment['chargeable_weight'], 2); ?> kg</td>
             </tr>
         </table>
-    </div>
 
-    <!-- Receiver Details -->
-    <div class="section">
-        <div class="section-title">RECEIVER DETAILS</div>
-        <table class="form-table">
+        <!-- Pricing Table -->
+        <table class="pricing-table">
             <tr>
-                <td class="label">NAME</td>
-                <td class="value" colspan="2"><?php echo $shipment['receiver_name']; ?></td>
-                <td class="label">RECEIVERS ADDRESS</td>
-                <td class="value"><?php echo $shipment['receiver_address']; ?></td>
-                <td class="label">PHONE NO.</td>
-                <td class="value"><?php echo $shipment['phone1'] . ($shipment['phone2'] ? ', ' . $shipment['phone2'] : ''); ?></td>
+                <td class="label">KG RATE</td>
+                <td class="value">€ <?php echo number_format($shipment['rate_per_kg'], 2); ?></td>
+            </tr>
+            <tr>
+                <td class="label">FREIGHT AMOUNT</td>
+                <td class="value">€ <?php echo number_format($shipment['freight_amount'], 2); ?></td>
+            </tr>
+            <tr>
+                <td class="label">TAX</td>
+                <td class="value">€ <?php echo number_format($shipment['tax_amount'], 2); ?></td>
+            </tr>
+            <tr class="total-row">
+                <td class="label">TOTAL PAYABLE</td>
+                <td class="value">€ <?php echo number_format($shipment['total_payable'], 2); ?></td>
             </tr>
         </table>
-    </div>
 
-    <!-- Sinhala Text -->
-    <div class="sinhala-text">
-        <?php echo htmlspecialchars_decode($company['sinhala_text'] ?? ''); ?>
-    </div>
-
-    <div class="section-title">REMARKS:</div>
-    <div class="remarks-section">
-        <?php echo nl2br(htmlspecialchars($shipment['remarks'])); ?>
-    </div>
-
-    <!-- Items and Weight -->
-    <table class="form-table" style="margin-top: 20px;">
-        <tr>
-            <th>ITEMS</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td class="label">NO. OF BOXES</td>
-            <td class="value"><?php echo $shipment['no_of_boxes']; ?></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-
-    <!-- Pricing Table -->
-    <table class="form-table" style="width: 50%; margin-left: auto; margin-top: 20px;">
-        <tr>
-            <td class="label">ACTUAL WEIGHT</td>
-            <td class="value"><?php echo number_format($shipment['actual_weight'], 2); ?> kg</td>
-        </tr>
-        <tr>
-            <td class="label">CHARGEABLE WEIGHT</td>
-            <td class="value"><?php echo number_format($shipment['chargeable_weight'], 2); ?> kg</td>
-        </tr>
-        <tr>
-            <td class="label">KG RATE</td>
-            <td class="value">€ <?php echo number_format($shipment['rate_per_kg'], 2); ?></td>
-        </tr>
-        <tr>
-            <td class="label">TOTAL</td>
-            <td class="value">€ <?php echo number_format($shipment['freight_amount'], 2); ?></td>
-        </tr>
-        <tr>
-            <td class="label">TAX</td>
-            <td class="value">€ <?php echo number_format($shipment['tax_amount'], 2); ?></td>
-        </tr>
-        <tr>
-            <td class="label" style="background-color: #e0e0e0;"><strong>TOTAL PAYABLE</strong></td>
-            <td class="value" style="background-color: #e0e0e0;"><strong>€ <?php echo number_format($shipment['total_payable'], 2); ?></strong></td>
-        </tr>
-    </table>
-
-    <!-- Signature Section -->
-    <div class="signature-section">
-        <div class="signature-box">
-            <div>SIGNATURE</div>
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <div>SIGNATURE</div>
+            </div>
+            <div class="signature-box-date">
+                <div><?php echo date('d/m/Y H:i'); ?></div>
+                <div>DATE & TIME</div>
+                
+            </div>
+            <div class="signature-box">
+                <div>Ceylon Express</div>
+            </div>
         </div>
-        <div class="signature-box">
-            <div>DATE & TIME</div>
-            <div><?php echo date('d/m/Y H:i'); ?></div>
+
+         <div class="branch-section">
+            <div style="text-align: center; width: 100%; font-size: 9px; padding-top: 5px;">
+                WAREHOUSE (PILIYANDALA) - 076 484 8506 | (JA-ELA) - +94117006651 / 0741131169 
+            </div>
         </div>
-        <div class="signature-box">
-            <div>Ceylon Express</div>
-        </div>
-    </div>
     </div>
 </body>
-
 </html>
